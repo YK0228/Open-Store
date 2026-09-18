@@ -1,0 +1,7 @@
+{
+  "name": "開店通 — 你的微型創業第一站",
+  "description": "專為 28-40 歲上班族與斜槓青年打造的微型創業導航平台。提供 AI 創業體檢、專屬籌備時間軸、政府政策補助智慧匹配、數位轉型避坑指南與專家諮詢媒合。",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
