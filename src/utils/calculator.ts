@@ -92,7 +92,7 @@ export function calculateBudgetBreakdown(profile: UserProfile): BudgetBreakdown 
   const reserveEmergencyFunds = Math.round(target * 0.22); // 至少 22% 護城河
 
   // If gap exists, recommend loaning the gap plus a 10% safety cushion
-  const recommendedLoan = gap > 0 ? Math.min(200, gap + 10) : 0;
+  const recommendedLoan = gap > 0 ? Math.round(gap * 1.05) : 0;
 
   return {
     renovationAndHardware,

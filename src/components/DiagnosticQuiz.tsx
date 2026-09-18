@@ -352,15 +352,27 @@ export function DiagnosticQuiz({ initialProfile, onComplete }: DiagnosticQuizPro
                   <label className="text-sm font-bold text-stone-800">
                     目前預計投入的「自有積蓄資金」
                   </label>
-                  <span className="text-lg font-extrabold text-amber-700">
-                    NT$ {profile.ownFunds} 萬元
-                  </span>
+                  <div className="flex items-center gap-1">
+                    <input
+                      type="number"
+                      min={10}
+                      max={1000}
+                      step={5}
+                      value={profile.ownFunds}
+                      onChange={(e) => {
+                        const val = Math.max(0, Math.min(1000, Number(e.target.value) || 0));
+                        setProfile({ ...profile, ownFunds: val });
+                      }}
+                      className="w-24 rounded-lg border border-stone-300 bg-stone-50 px-2 py-1 text-right text-base font-extrabold text-amber-700 focus:border-amber-600 focus:bg-white focus:outline-hidden"
+                    />
+                    <span className="text-sm font-bold text-stone-700">萬元</span>
+                  </div>
                 </div>
                 <input
                   type="range"
                   min={10}
-                  max={250}
-                  step={5}
+                  max={1000}
+                  step={10}
                   value={profile.ownFunds}
                   onChange={(e) =>
                     setProfile({ ...profile, ownFunds: Number(e.target.value) })
@@ -369,23 +381,24 @@ export function DiagnosticQuiz({ initialProfile, onComplete }: DiagnosticQuizPro
                 />
                 <div className="mt-2 flex justify-between text-xs text-stone-600">
                   <span>NT$ 10 萬</span>
-                  <span>100 萬</span>
-                  <span>250 萬+</span>
+                  <span>300 萬</span>
+                  <span>600 萬</span>
+                  <span>1000 萬</span>
                 </div>
 
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {[30, 60, 90, 120, 160].map((amt) => (
+                <div className="mt-3 flex flex-wrap gap-1.5">
+                  {[50, 100, 200, 350, 500, 800, 1000].map((amt) => (
                     <button
                       key={amt}
                       type="button"
                       onClick={() => setProfile({ ...profile, ownFunds: amt })}
-                      className={`rounded-md px-2.5 py-1 text-xs font-medium transition-colors ${
+                      className={`rounded-md px-2 py-1 text-xs font-medium transition-colors ${
                         profile.ownFunds === amt
                           ? "bg-amber-700 text-white"
                           : "bg-stone-100 text-stone-700 hover:bg-stone-200"
                       }`}
                     >
-                      {amt} 萬
+                      {amt >= 100 ? `${amt / 100}億` : `${amt}萬`}
                     </button>
                   ))}
                 </div>
@@ -397,15 +410,27 @@ export function DiagnosticQuiz({ initialProfile, onComplete }: DiagnosticQuizPro
                   <label className="text-sm font-bold text-stone-800">
                     預估開店「總啟動預算」
                   </label>
-                  <span className="text-lg font-extrabold text-stone-900">
-                    NT$ {profile.targetBudget} 萬元
-                  </span>
+                  <div className="flex items-center gap-1">
+                    <input
+                      type="number"
+                      min={30}
+                      max={3000}
+                      step={10}
+                      value={profile.targetBudget}
+                      onChange={(e) => {
+                        const val = Math.max(10, Math.min(3000, Number(e.target.value) || 0));
+                        setProfile({ ...profile, targetBudget: val });
+                      }}
+                      className="w-24 rounded-lg border border-stone-300 bg-stone-50 px-2 py-1 text-right text-base font-extrabold text-stone-900 focus:border-stone-900 focus:bg-white focus:outline-hidden"
+                    />
+                    <span className="text-sm font-bold text-stone-700">萬元</span>
+                  </div>
                 </div>
                 <input
                   type="range"
                   min={30}
-                  max={350}
-                  step={5}
+                  max={3000}
+                  step={10}
                   value={profile.targetBudget}
                   onChange={(e) =>
                     setProfile({ ...profile, targetBudget: Number(e.target.value) })
@@ -414,23 +439,24 @@ export function DiagnosticQuiz({ initialProfile, onComplete }: DiagnosticQuizPro
                 />
                 <div className="mt-2 flex justify-between text-xs text-stone-600">
                   <span>NT$ 30 萬</span>
-                  <span>150 萬</span>
-                  <span>350 萬+</span>
+                  <span>1000 萬</span>
+                  <span>2000 萬</span>
+                  <span>3000 萬</span>
                 </div>
 
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {[60, 100, 140, 180, 240].map((amt) => (
+                <div className="mt-3 flex flex-wrap gap-1.5">
+                  {[120, 300, 600, 1000, 1500, 2000, 3000].map((amt) => (
                     <button
                       key={amt}
                       type="button"
                       onClick={() => setProfile({ ...profile, targetBudget: amt })}
-                      className={`rounded-md px-2.5 py-1 text-xs font-medium transition-colors ${
+                      className={`rounded-md px-2 py-1 text-xs font-medium transition-colors ${
                         profile.targetBudget === amt
                           ? "bg-stone-900 text-white"
                           : "bg-stone-100 text-stone-700 hover:bg-stone-200"
                       }`}
                     >
-                      {amt} 萬
+                      {amt >= 100 ? `${amt / 100}億` : `${amt}萬`}
                     </button>
                   ))}
                 </div>
@@ -459,7 +485,7 @@ export function DiagnosticQuiz({ initialProfile, onComplete }: DiagnosticQuizPro
 
                 <div className="border-t border-stone-200 pt-2 sm:border-t-0 sm:pt-0 sm:text-right">
                   <span className="text-xs text-stone-500">
-                    {currentCapitalGap > 0 ? "需政策融資補足之缺口" : "資金充裕狀態"}
+                    {currentCapitalGap > 0 ? "需政策融資/貸款補足之缺口" : "資金充裕狀態"}
                   </span>
                   <div className="text-lg font-extrabold text-amber-700">
                     {currentCapitalGap > 0 ? (
@@ -470,7 +496,11 @@ export function DiagnosticQuiz({ initialProfile, onComplete }: DiagnosticQuizPro
                   </div>
                   {currentCapitalGap > 0 && (
                     <span className="text-[11px] text-stone-500">
-                      可透過「青創貸款 100 萬免保人」無痛補足
+                      {currentCapitalGap <= 100
+                        ? "可透過「青創貸款 100 萬免保人」無痛補足"
+                        : currentCapitalGap <= 400
+                        ? "可透過青年創業貸款+中小企業低利政策補足"
+                        : "建議搭配青創貸款、中企信保基金與天使策略投資"}
                     </span>
                   )}
                 </div>

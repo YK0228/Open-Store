@@ -214,12 +214,18 @@ export function ReportSummaryCard({
             </div>
 
             <div className="rounded-xl border border-blue-200/80 bg-blue-50/50 p-3.5">
-              <span className="text-xs text-blue-900 font-medium">資金缺口 (建議貸款)</span>
+              <span className="text-xs text-blue-900 font-medium">資金缺口 (建議融資)</span>
               <div className="mt-1 text-lg font-black text-blue-900">
                 {budget.capitalGap > 0 ? `NT$ ${budget.capitalGap} 萬` : "無缺口"}
               </div>
               <span className="text-[11px] text-blue-700">
-                青創貸款 100 萬免保人
+                {budget.capitalGap === 0
+                  ? "自有資金充裕"
+                  : budget.capitalGap <= 100
+                  ? "青創 100 萬免保人"
+                  : budget.capitalGap <= 400
+                  ? "青創貸款+低利政策"
+                  : "政策融資+信保+創投"}
               </span>
             </div>
 
