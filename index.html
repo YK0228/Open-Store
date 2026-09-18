@@ -12,6 +12,28 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      /* 基礎設定 (桌面版) */
+      .container {
+        width: 85%;
+        max-width: 1280px;
+        margin: 0 auto;
+      }
+      
+      /* 手機版 (螢幕寬度小於 768px) 的專屬設定 */
+      @media (max-width: 768px) {
+        .container {
+          width: 95%; /* 讓內容在手機上佔據大部分寬度，滿版舒適 */
+          padding: 10px;
+        }
+        h1 {
+          font-size: 1.5rem !important; /* 縮小手機版的標題字級，避免換行突兀 */
+        }
+        h2 {
+          font-size: 1.25rem !important;
+        }
+      }
+    </style>
   </head>
   <body class="bg-stone-50 text-stone-900 antialiased selection:bg-amber-100 selection:text-amber-900">
     <div id="root"></div>
